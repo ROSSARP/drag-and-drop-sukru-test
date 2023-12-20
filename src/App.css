@@ -18,14 +18,12 @@ body {
   margin: 0;
   min-height: 100vh;
 }
-
-td {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  margin: 3%;
-  width: 20%;
+h3 {
+  text-overflow: clip;
+  white-space: nowrap;
+  overflow: hidden;
 }
+
 
 
 
@@ -48,27 +46,28 @@ td {
 }
 
 .card {
+  font-size: 12px;
   border-color: black;
   background-color:white;
-  padding: 20px;
+  padding: 5px;
   border-radius: 5px;
   margin: 3%;
-  width: 20%;
+  width: 14%;
   float: left;
     padding: 20px;
     border: 2px solid red;
 }
 .tablo {
- 
-  margin-right: 5px;
-  margin-top: 25px;
+  font-size: 12px;
+  margin-right: 0px;
+  margin-top: 15px;
   background-color:white;
-  padding: 20px;
+  padding: 10px;
   border-radius: 5px;
-  width: 20%;
+  width: 14%;
   float: left;
-    padding: 20px;
-    border: 2px solid red;
+    padding: 10px;
+    border: 2px solid black;
 }
 
 .header {
@@ -78,16 +77,42 @@ td {
 }
 
 .ders-container {
-  text-align: center;
-  padding: 5px;
+  
+  text-align: left;
+  padding: 2px;
   border-color: black;
   border-style: inset;
   background-color:white;
+  
 }
+.saat {
+  text-align: left;
+  padding: 2px;
+  border-color: black;
+  border-style: inset;
+  background-color:white;
+  
+}
+.tablo-saat {
+  font-size: 12px;
+  margin-right: 0px;
+  margin-top: 15px;
+  background-color:white;
+  padding: 10px;
+  border-radius: 5px;
+  width: 7%;
+  float: left;
+    padding: 10px;
+    border: 2px solid black;
+}
+
 .ders-bos {
   text-align: center;
-  padding: 5px;
+  padding: 2px;
   background-color:white;
+  border-style: inset;
+  border-color: black;
+
 }
 
 .items-container {
@@ -95,7 +120,7 @@ td {
 }
 
 .item-container {
-  padding: 5px;
+  padding: 2px;
   border-bottom: 1px solid grey
 }
 
