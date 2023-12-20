@@ -36,13 +36,22 @@ const DATA = [
     id: "045",
     name: "lab",
   },  {
-    id: "04343",
+    id: "1004393",
+    name: " Sayisal analiz",
+  },
+  {
+    id: "1005343",
+    name: "Networking ",
+  },
+  {
+    id: "1003343",
     name: " dağitik sistemler",
   },
   {
-    id: "0404",
-    name: "ders listesini sonu",
+    id: "04343",
+    name: " dağitik sistemler",
   },
+
 ];
 const DATAP = [
 
@@ -80,6 +89,7 @@ function App() {
   const[per,setPER]=useState(DATAPER);
   const[cuma,setCUMA]=useState(DATACUMA);
   const[cumat,setCUMAt]=useState(DATACUMAt);
+  const numberofders=14;
 
  
   const gundizi=[ders,pazartesi,sali,car,per,cuma];//günler dizisi
@@ -99,7 +109,7 @@ function App() {
       console.log("a");
     }
   }
-  if(x===0){
+  if(pazartesi.length<numberofders){
     //render başlayınca sadece bir defa doldursun diye x i kullanıyorum 
     gunOLustur(pazartesi,1);
     gunOLustur(sali,2);
@@ -109,7 +119,7 @@ function App() {
     gunOLustur(cumat,6);
 
   }
-  x=1;
+  
   const handleUniversal=(results)=>{
     const{ source, destination , type}=results;
     
@@ -120,6 +130,10 @@ function App() {
     console.log(ders);
     console.log(pazartesi);
     console.log({destination,source});
+
+    if(destination===null) return;//null safety için
+    console.log("destianation null problemi",destination.droppableId);
+
     //splice hatasının çözümü için index kopyası olarak column dan bakıyorum 
     var indexsource=clolumn.indexOf(source.droppableId);
     var indexdest=clolumn.indexOf(destination.droppableId);
@@ -133,8 +147,7 @@ function App() {
     const tempdestcheck=arrtempdest[destinationIndex];
     const tempsourcheck=arrtempsource[sourceIndex];
     //yukardaki 4 const dakiler alttaki iflerde kullandıklarım 
-    if(!destination) return;//null safety için
-    console.log(destination.droppableId);
+  
     
 
     if(source.droppableId===destination.droppableId && source.index===destination.index) return;
@@ -158,6 +171,7 @@ function App() {
       }
 
     }
+
     console.log(gundizi);
    // console.log(" source dropbleid index :",gundizi.FindIndex(source.droppableId));
     //console.log("desti dropbleid index :",gundizi.FindIndex(destination.droppableId));
@@ -165,8 +179,11 @@ function App() {
     //herhangibi bi yerden başka bir yere gidişte çalışıcak  
     //hala düzeltemededim splice hatası devam ediyo 11.12.2023  şimdi fark ettim stringin modunu alıyorum
 
+    //çarşambada sorun var ders siliniyo çarşamba günüde sorun yok çok hızlı yer değişikliyi ni art arda yaptığımda 
+    //render kasıyo
 
 
+    
 
     if(arrtempdest.length!=0){
       if(tempdestcheck.name==="."){
@@ -214,18 +231,46 @@ function App() {
     if(arrtempsource.length!=0){
       if(tempsourcheck.name!="."){
         console.log("boş ders oynatma");
-        //burda bide elaman ekledim ama yanlış ekledşm geri alıcaksam yenşden boş bi ders oluşturmam lazım s
+        //burda bide elaman ekledim ama yanlış ekledşm geri alıcaksam yenşden boş bi ders oluşturmam lazım bunu yaptim 
         const [removedDers]=arrtempsource.splice(sourceIndex,1);//hareket halindeki dersi listeden silip removedDersin içine atar
         arrtempdest.splice(destinationIndex,0,removedDers);
         gundizi[indexsource] = arrtempsource;
         gundizi[indexdest]=arrtempdest;
+        //numberof dersi en üstte tanımladım şimdilik 14
+        console.log("ders üstüne ders sorunu : ",arrtempdest.length);
+        if(arrtempdest.length>numberofders){
+          console.log("büyük  ");
+          var i=1;
+          while(arrtempdest.length>numberofders){
+            console.log("while ");
+            //indeks 14 den itibaren kontrol edicek
+            
+            if(arrtempdest[numberofders-i].name==="."){
+              arrtempdest.splice(numberofders-i,1);
+              console.log("ders çakişmasi boş ders sildi");
+            }else{
+              i=i+1;
+            }
+
+          }
+        }
+        if(arrtempdest===ders){
+          let numt = 7*1000+(Math.floor(Math.random() * 100));//id de int i normalden 3 basamak fazladan başlatıcam 7000+random(1-100 arası gibi ) ünickliği sağlamalı
+          let textidt= numt.toString();
+          const placeht= new Object();
+          placeht.id=textidt;
+          placeht.name=".";
+          arrtempsource.splice(sourceIndex,0,placeht);
+          //vaz geçip dersi günün içinden geri koyarken günkısalmasın diye
+
+        }
         return ;
-        //iki sütun arasında gün değişiminde source a birtane boş ders eklemem lazım 
-        //ders sayısı başta azalıyo ama sonradan eklemiyorum 
+        //iki sütun arasında gün değişiminde source a birtane boş ders eklemem lazım bununda yaptim
+        //ders sayısı başta azalıyo ama sonradan eklemiyorum yaptim
       }
 
     }
-    //şimdilik heryerdenher yere burda kalsın normalde yukardaki if return edince buralar çalışmıyccak
+    //şimdilik heryerden her yere burda kalsın normalde yukardaki if return edince buralar çalışmıyccak
     const [removedDers]=arrtempsource.splice(sourceIndex,1);//hareket halindeki dersi listeden silip removedDersin içine atar
     arrtempdest.splice(destinationIndex,0,removedDers);
     gundizi[indexsource] = arrtempsource;
